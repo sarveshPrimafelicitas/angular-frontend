@@ -1,43 +1,57 @@
 <div class="pt-14 px-32 w-full">
-    <h1 class="text-center self-center text-3xl font-semibold mb-8">
-      Add an employee
-    </h1>
-    <div class="flex flex-col justify-center items-start w-full space-y-2">
+  <h1 class="text-center self-center text-3xl font-semibold mb-8">
+    Add an employee
+  </h1>
+  <form
+    [formGroup]="createPostEmployeeForm"
+    (ngSubmit)="onSubmitForm()"
+    class="flex flex-col justify-center items-start w-full space-y-2"
+  >
+    <div class="w-full">
       <input
         placeholder="Employee Name"
         class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
+        formControlName="employeeName"
+        autocomplete="off"
       />
+      @if(employeeName.invalid && (employeeName.dirty || employeeName.touched)){
+      @if(employeeName.hasError("required")){
+      <p class="text-red-500 text-sm">Employee Name is required</p>
+      } @else if(employeeName.hasError("minlength")) {
+      <p class="text-red-500 text-sm">Minimum length is 6</p>
+      } }
+    </div>
+
+    <div class="w-full">
       <input
         placeholder="Designation"
         class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
+        formControlName="designation"
+        autocomplete="off"
       />
-      <input
-        placeholder="Email"
-        class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
-      />
-      <input
-        placeholder="Password"
-        class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
-        type="password"
-      />
-      <input
-        placeholder="Confirm Password"
-        class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
-        type="password"
-      />
-      <div class="flex justify-center items-start w-full mt-6 space-x-4">
-        <button
-          [routerLink]="['/']"
-          class="border border-blue-500 text-blue-500 p-3 text-xl rounded-md font-semibold"
-        >
-          Cancel
-        </button>
-        <button
-          class="bg-blue-500 text-white p-3 text-xl rounded-md font-semibold"
-        >
-          Submit
-        </button>
-      </div>
+      @if(designation.invalid && (designation.dirty || designation.touched)){
+        @if(designation.hasError("required")){
+        <p class="text-red-500 text-sm">Designation is required</p>
+        } @else if(designation.hasError("minlength")) {
+        <p class="text-red-500 text-sm">Minimum length is 6</p>
+        } }
     </div>
-  </div>
-  
+
+    <div class="flex justify-center items-start w-full mt-6 space-x-4">
+      <button
+        [routerLink]="['/']"
+        type="button"
+        class="border border-blue-500 text-blue-500 p-3 text-xl rounded-md font-semibold"
+      >
+        Cancel
+      </button>
+      <button
+        class="bg-blue-500 text-white p-3 text-xl rounded-md font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="createPostEmployeeForm.invalid"
+        type="submit"
+      >
+        Submit
+      </button>
+    </div>
+  </form>
+</div>

@@ -11,4 +11,12 @@ export class DataServiceService {
   postData(endpoint: string, data: any): Observable<any> {
     return this.http.post(endpoint, data);
   }
+
+  getData(endpoint: string): Observable<any> {
+    return this.http.get(endpoint);
+  }
+
+  deleteData(endpoint: string): Observable<any> {
+    return this.http.delete(endpoint);
+  }
 }

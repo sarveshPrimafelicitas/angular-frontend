@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   AbstractControl,
   FormControl,
@@ -26,6 +26,7 @@ export class CreateAccountComponent {
   dataService = inject(DataServiceService);
   userService = inject(UserService);
   tokenService = inject(TokenService);
+  router = inject(Router);
 
   createPostCompanyForm = new FormGroup(
     {
@@ -97,11 +98,13 @@ export class CreateAccountComponent {
           if (response.data.token) {
             this.tokenService.setToken(response.data.token, 24 * 60);
             this.userService.isLoggedIn.set(true);
+            this.router.navigate(['/']);
+            this.tokenService.companyDetails.set(response.data.user)
           }
         },
         error: (error) => {
           console.error('Error:', error);
-          alert('Error submitting data');
+          alert(error?.error?.message);
         },
         complete: () => {
           console.log('Request completed.');

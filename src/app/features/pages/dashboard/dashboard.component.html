@@ -1,3 +1,9 @@
 <div class="pt-32 flex justify-center items-center">
-    <h1 class="text-6xl font-semibold">Welcome to the project! userNmae</h1>
+  @if(userService.isLoggedIn()){
+  <h1 class="text-6xl font-semibold">
+    Welcome {{ tokenService.companyDetails().companyName }}
+  </h1>
+  }@else{
+  <h1 class="text-6xl font-semibold">Login to view your profile</h1>
+  }
 </div>
