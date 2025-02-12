@@ -9,5 +9,4 @@ import { NavbarComponent } from './layouts/navbar/navbar.component';
   styleUrl: './app.component.css',
 })
 export class AppComponent {
-  title = 'angular-frontend';
 }

@@ -2,45 +2,99 @@
   <h1 class="text-center self-center text-3xl font-semibold mb-8">
     Register your company
   </h1>
-  <div class="flex flex-col justify-center items-start w-full space-y-2">
-    <input
-      placeholder="Company Name"
-      class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
-    />
-    <input
-      placeholder="Founded in"
-      class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
-    />
-    <input
-      placeholder="Company Type"
-      class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
-    />
-    <input
-      placeholder="Email"
-      class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
-    />
-    <input
-      placeholder="Password"
-      class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
-      type="password"
-    />
-    <input
-      placeholder="Confirm Password"
-      class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
-      type="password"
-    />
+  <form
+    [formGroup]="createPostCompanyForm"
+    (ngSubmit)="onSubmitForm()"
+    class="flex flex-col justify-center items-start w-full space-y-2"
+  >
+    <div class="w-full">
+      <input
+        placeholder="Company Name"
+        class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
+        formControlName="companyName"
+        autocomplete="off"
+      />
+      @if(companyName.invalid && (companyName.dirty || companyName.touched)){
+      @if(companyName.hasError("required")){
+      <p class="text-red-500 text-sm">Company Name is required</p>
+      } @else if(companyName.hasError("minlength")) {
+      <p class="text-red-500 text-sm">Minimum length is 6</p>
+      } }
+    </div>
+
+    <div class="w-full">
+      <input
+        placeholder="Company Type"
+        class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
+        formControlName="companyType"
+      />
+      @if(companyType.invalid && (companyType.dirty || companyType.touched)){
+      @if(companyType.hasError("required")){
+      <p class="text-red-500 text-sm">Select company type</p>
+      } }
+    </div>
+
+    <div class="w-full">
+      <input
+        placeholder="Email"
+        class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
+        formControlName="email"
+      />
+      @if(email.invalid && (email.dirty || email.touched)){
+      @if(email.hasError("required")){
+      <p class="text-red-500 text-sm">Email is required</p>
+      }@else if(email.hasError("email")) {
+      <p class="text-red-500 text-sm">Email is invalid</p>
+      } }
+    </div>
+
+    <div class="w-full">
+      <input
+        placeholder="Password"
+        class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
+        type="text"
+        formControlName="password"
+      />
+      @if(password.invalid && (password.dirty || password.touched)){
+      @if(password.hasError("required")){
+      <p class="text-red-500 text-sm">Password is required</p>
+      } @else if(password.hasError("minlength")) {
+      <p class="text-red-500 text-sm">Minimum length is 6</p>
+      } }
+    </div>
+
+    <div class="w-full">
+      <input
+        placeholder="Confirm Password"
+        class="outline-none bg-white border border-gray-300 p-2 rounded-md w-full"
+        type="text"
+        formControlName="confirmPassword"
+      />
+      @if(confirmPassword.invalid && (confirmPassword.dirty ||
+      confirmPassword.touched)){ @if(confirmPassword.hasError("required")){
+      <p class="text-red-500 text-sm">Confirm Password is required</p>
+      } @else if(confirmPassword.hasError("minlength")) {
+      <p class="text-red-500 text-sm">Minimum length is 6</p>
+      }} @if(passwordMismatch){
+      <p class="text-red-500 text-sm">Password does not match</p>
+      }
+    </div>
+
     <div class="flex justify-center items-start w-full mt-6 space-x-4">
       <button
+        type="button"
         [routerLink]="['/']"
         class="border border-blue-500 text-blue-500 p-3 text-xl rounded-md font-semibold"
       >
         Cancel
       </button>
       <button
-        class="bg-blue-500 text-white p-3 text-xl rounded-md font-semibold"
+        type="submit"
+        [disabled]="createPostCompanyForm.invalid"
+        class="bg-blue-500 text-white p-3 text-xl rounded-md font-semibold cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Submit
       </button>
     </div>
-  </div>
+  </form>
 </div>
